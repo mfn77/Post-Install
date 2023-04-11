@@ -1,9 +1,9 @@
 # Post-Install
-Post Install Script That Installs Some of My Favorite Applications And Copies And Applies Some Configurations and Customizations
+Post Install Script That Installs Some Applications And Copies And Applies Some Configurations and Customizations
 
 # INSTALLING
 
-You don't have to download the repo, install script automatically of downloads it. Programı You have tree options for automatic install:
+You don't have to download the repo, install script automatically downloads it. You have tree options for automatic install:
 
 1- You can use this command:
 
