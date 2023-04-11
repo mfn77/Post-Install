@@ -1,13 +1,11 @@
 #!/bin/bash
-#Location Stating
-DIR="$HOME"
-C_DIR="$HOME/.config"
-T_DIR="$HOME/.local/share"
-F_DIR="$HOME/.mozilla/firefox/*.default-release"
+
 bold=$(tput bold)
 normal=$(tput sgr0)
-cd "$DIR" || exit
+
+cd ~/ || exit
 clear
+
 #Checking to see if the system is a Nobara Linux
 if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     echo "You are using Nobara"
@@ -97,31 +95,27 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     fi
     #Downloading And Copying Configs
     echo -e "\e[1;31m${bold}Configurations Syncing${normal}\e[0m"
-    cd "$DIR" || exit
+    cd ~/ || exit
     echo -e "\e[1;31m${bold}Downloading Configuration Files${normal}\e[0m"
     git clone https://github.com/mfn77/Post-Install.git
-    cd "$DIR"/Post-Install/icons || exit
+    cd ~/Post-Install/icons || exit
     tar xvf Bibata-Modern-Ice.tar.xz
     rm Bibata-Modern-Ice.tar.xz
-    cd "$DIR"/Post-Install/themes || exit
+    cd ~/Post-Install/themes || exit
     tar xvf adw-gtk3.tar.xz
     tar xvf adw-gtk3-dark.tar.xz
     rm adw-gtk3.tar.xz
     rm adw-gtk3-dark.tar.xz
-    cd "$DIR"/Post-Install || exit
-    cp -Rv config/gtk-2.0 "$C_DIR"/
-    cp -Rv config/gtk-3.0 "$C_DIR"/
-    cp -Rv config/gtk-4.0 "$C_DIR"/
-    cp -Rv config/dconf "$C_DIR"/
-    cp -Rv config/menus "$C_DIR"/
-    cp -Rv fonts/ "$T_DIR"/
-    cp -Rv themes/ "$T_DIR"/
-    cp -Rv icons/ "$T_DIR"/
-    cp -Rv chrome/ "$F_DIR"/ 
-    cd "$DIR" || exit
+    
+    cd ~/Post-Install || exit
+    cp -Rv config/{gtk-2.0,gtk-3.0,gtk-4.0,dconf,menus} ~/.config/
+    cp -Rv {font,themes,icons} ~/.local/share
+    cp -Rv chrome ~/.mozilla/firefox/*.default-release/ 
+    
+    cd ~/ || exit
     rm -f .autostart
     mv  autostart .autostart
-    rm -rf "$DIR"/Post-Install
+    rm -rf ~/Post-Install
     echo -e "\e[1;31m${bold}Configuration Files are synced${normal}\e[0m"
     #Installing Wallpapers
     read -p "Do you want to install Wallpapers? (Y/n) " confirmation
