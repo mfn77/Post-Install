@@ -8,7 +8,7 @@ You don't have to download the repo, install script automatically of downloads i
 1- You can use this command:
 
 ```sh
-curl -s -L https://raw.githubusercontent.com/mfn77/Post-Install/main/Install.sh | bash
+curl -s -L https://raw.githubusercontent.com/mfn77/Post-Install/main/Post-Install.sh | bash
 ```
 
 2- Or after downloading Post-Install script from releases, then Right Click>Properties>Run this as a program>Right Click Again>Run This Program
