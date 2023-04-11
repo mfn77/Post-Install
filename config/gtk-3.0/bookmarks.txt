@@ -1,0 +1,5 @@
+file:///home/mfn/Documents
+file:///home/mfn/Music
+file:///home/mfn/Pictures
+file:///home/mfn/Videos
+file:///home/mfn/Downloads
