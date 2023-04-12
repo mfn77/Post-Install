@@ -11,7 +11,7 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
 - Theming Apps:  
 
   *Extension Manager(flatpak)
-  *Gradience(flattpak)
+  *Gradience(flatpak)
   *adw-gtk3(flatpak)
   *adw-gtk3-dark(flatpak)
   *alacarte
