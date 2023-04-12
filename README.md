@@ -12,94 +12,94 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
 
 ### Theming Apps:  
 
-  -Extension Manager(flatpak)
+  - Extension Manager(flatpak)
   
-  -Gradience(flatpak)
+  - Gradience(flatpak)
   
-  -adw-gtk3(flatpak)
+  - adw-gtk3(flatpak)
   
-  -adw-gtk3-dark(flatpak)
+  - adw-gtk3-dark(flatpak)
   
-  -alacarte
+  - alacarte
   
-  -dconf editor
+  - dconf editor
   
                                    
 ### LibreOffice:           
 
-  -Libreoffice
+  - Libreoffice
   
-  -Libreoffice tr language pack
+  - Libreoffice tr language pack
   
-  -Libreoffice papirus theme
+  - Libreoffice papirus theme
   
                                    
 ### Gaming Apps:          
             
-  -AdwSteamGtk(flatpak)
+  - AdwSteamGtk(flatpak)
   
-  -Heroic Game Launcher(flatpak)
+  - Heroic Game Launcher(flatpak)
   
                                    
 ### Photo Editing and Drawing Apps:  
 
-  -GIMP
+  - GIMP
   
-  -Inkscape
+  - Inkscape
   
-  -Blender
+  - Blender
   
                                    
 ### Virtualization Apps:            
   
-  -Gnome-Boxes
+  - Gnome-Boxes
   
-  -VirtualBox
+  - VirtualBox
   
-  -VirtualBox Kernel Modules
+  - VirtualBox Kernel Modules
   
-  -VirtualBox Guest Additions
+  - VirtualBox Guest Additions
   
-  -Waydroid
+  - Waydroid
   
                                    
 ### Configs:                         
   
-  -Bibata Modern Ice Cursor Theme Files
+  - Bibata Modern Ice Cursor Theme Files
   
-  -Customized Gnome Shell Theme Files
+  - Customized Gnome Shell Theme Files
   
-  -Some Fonts Files
+  - Some Fonts Files
   
-  -adw-gtk3 theme Files
+  - adw-gtk3 theme Files
   
-  -adw-gtk3-dark theme Files
+  - adw-gtk3-dark theme Files
   
-  -Gnome Menu Config Files
+  - Gnome Menu Config Files
   
-  -Gnome dconf Files
+  - Gnome dconf Files
   
                                    
 ### Wallpapers:                      
   
-  -Linux Dynamic Wallpapers
+  - Linux Dynamic Wallpapers
   
 
 ### Settings:                        
   
-  -Text Cache Refresh
+  - Text Cache Refresh
   
-  -Text Scaling 1.15 for Full HD Screens
+  - Text Scaling 1.15 for Full HD Screens
   
-  -adw-gtk3 theme applying
+  - adw-gtk3 theme applying
   
-  -Custom Shell theme applying
+  - Custom Shell theme applying
   
-  -Bibata Modern Ice cursor theme applying
+  - Bibata Modern Ice cursor theme applying
   
-  -Papirus Icon Theme applying
+  - Papirus Icon Theme applying
   
-  -Material Mountains Wallpaper applying
+  - Material Mountains Wallpaper applying
   
 
 ## Arch (Lots of things will be added)
@@ -110,7 +110,7 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
 
 ### Pacman Helper:                   
 
-  -Yay
+  - Yay
 
 
 
