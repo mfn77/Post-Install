@@ -19,3 +19,9 @@ curl -s -L https://raw.githubusercontent.com/mfn77/Post-Install/main/Post-Instal
 chmod u+x Post-Install.sh
 ./Post-Install.sh 
 ```
+
+## Credit
+
+[wick3dr0se](https://github.com/wick3dr0se)
+
+[adamprice2](https://github.com/adamprice2)
