@@ -1,11 +1,11 @@
-# Post-Install
+# POST-INSTALL
 Post Install Script That Installs Some Applications And Copies And Applies Some Configurations and Customizations
 
 
 
-# Contents
+# CONTENTS
 
-## Nobara
+## NOBARA
 
 ### Flatpak
 
@@ -102,7 +102,7 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
   - Material Mountains Wallpaper applying
   
 
-## Arch (Lots of things will be added)
+## ARCH (Lots of things will be added)
 
 
 ### Flatpak
@@ -114,7 +114,7 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
 
 
 
-# **How to Install**
+# **HOW TO INSTALL**
 
 You don't have to download the repo, install script automatically downloads it. You have tree options for automatic install:
 
@@ -133,7 +133,7 @@ chmod u+x Post-Install.sh
 ./Post-Install.sh 
 ```
 
-# Credit
+# CREDITS
 
 - [wick3dr0se](https://github.com/wick3dr0se)
 
