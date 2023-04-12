@@ -1,7 +1,7 @@
-                                                 # Post-Install
+#                                                  Post-Install
 Post Install Script That Installs Some Applications And Copies And Applies Some Configurations and Customizations
 
-                                                  # INSTALLING
+#                                                   INSTALLING
 
 You don't have to download the repo, install script automatically downloads it. You have tree options for automatic install:
 
@@ -20,7 +20,7 @@ chmod u+x Post-Install.sh
 ./Post-Install.sh 
 ```
 
-                                                    ## Credit
+##                                                     Credit
 
 [wick3dr0se](https://github.com/wick3dr0se)
 
