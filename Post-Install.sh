@@ -4,7 +4,6 @@ bold=$(tput bold)
 normal=$(tput sgr0)
 
 cd ~/ || exit
-clear
 
 #Checking to see if the system is a Nobara Linux
 if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
@@ -12,15 +11,10 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     #Updating
     echo -e "\e[1;31m${bold}Updating System${normal}\e[0m"
     sudo dnf up -y && echo "System Updated"
-    BACK_PID=$!
-    wait $BACK_PID
-    clear
     #Installing Flatpak
     read -p "Do you want to install Flatpak? (Y/n) " confirmation
     if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
         sudo dnf install --assumeyes flatpak && echo "Flatpak Installed"
-        BACK_PID=$!
-        wait $BACK_PID
     else
         echo "Moving On"
     fi
@@ -28,23 +22,11 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     read -p "Do you want to install Customization Programs? (Y/n) " confirmation
     if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
         flatpak install ExtensionManager -y && echo "Extension Manager Installed" || echo "Extension Manager Couldn't Installed"
-        BACK_PID=$!
-        wait $BACK_PID
         flatpak install com.github.GradienceTeam.Gradience -y && echo "Gradience Installed" || echo "Gradience Couldn't Installed"
-        BACK_PID=$!
-        wait $BACK_PID
         flatpak install org.gtk.Gtk3theme.adw-gtk3 -y && echo "Adwaita GTK 3 Theme for flatpaks Installed" || echo "Adwaita GTK 3 Theme for flatpaks Couldn't Installed"
-        BACK_PID=$!
-        wait $BACK_PID
         flatpak install org.gtk.Gtk3theme.adw-gtk3-dark -y && echo "Adwaita GTK 3 Dark Theme for flatpaks Installed" || echo "Adwaita GTK 3 Dark Theme for flatpaks Couldn't Installed"
-        BACK_PID=$!
-        wait $BACK_PID
         sudo dnf install --assumeyes alacarte && echo "Alacarte Menu Editor Installed" || echo "Alacarte Menu Editor Couldn't Installed"
-        BACK_PID=$!
-        wait $BACK_PID
         sudo dnf install --assumeyes dconf-editor && echo "Dconf Editor Installed" || echo "Dconf Editor Couldn't Installed"
-        BACK_PID=$!
-        wait $BACK_PID
     else
         echo "Moving on"
     fi
@@ -52,14 +34,8 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     read -p "Do you want to install LibreOffice? (Y/n) " confirmation
     if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
         sudo dnf install --assumeyes libreoffice && echo "Libreoffice Installed" || echo "Libreoffice Couldn't Installed"
-        BACK_PID=$!
-        wait $BACK_PID
         sudo dnf install --assumeyes libreoffice-langpack-tr && echo "Libreoffice TR Language Pack Installed" || echo "Libreoffice TR Language Couldn't Installed"
-        BACK_PID=$!
-        wait $BACK_PID
         wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-libreoffice-theme/master/install-papirus-root.sh | sh && echo "Libreoffice Papirus Theme Installed" || echo "Libreoffice Papirus Theme Couldn't Installed"
-        BACK_PID=$!
-        wait $BACK_PID
     else
         echo "Moving on"
     fi
@@ -67,11 +43,7 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     read -p "Do you want to install Gaming Applications? (Y/n) " confirmation
     if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
         flatpak install io.github.Foldex.AdwSteamGtk -y && echo "Steam Adwaita Theme Installed" || echo "Steam Adwaita Theme Couldn't Installed"
-        BACK_PID=$!
-        wait $BACK_PID
         flatpak install com.heroicgameslauncher.hgl -y && echo "Heroic Games Launcher Installed" || echo "Heroic Games Launcher Couldn't Installed"
-        BACK_PID=$!
-        wait $BACK_PID
     else
         echo "Moving on"
     fi
@@ -88,8 +60,8 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     read -p "Do you want to install Virtualization Applications? (Y/n) " confirmation
     if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
         sudo dnf install --assumeyes gnome-boxes && echo "Boxes Installed" || echo "Boxes Couldn't Installed"
-        sudo dnf install --assumeyes virtualbox && echo "VirtualBox Installed" || echo "VİrtualBox Couldn't Installed"
-        sudo dnf install --assumeyes waydroid && echo "Blender Installed" || echo "Waydroid Couldn't Installed"
+        sudo dnf install --assumeyes VirtualBox && echo "VirtualBox Installed" || echo "VİrtualBox Couldn't Installed"
+        sudo dnf install --assumeyes waydroid && echo "Waydroid Installed" || echo "Waydroid Couldn't Installed"
     else
         echo "Moving on"
     fi
@@ -113,8 +85,6 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     cp -Rv chrome ~/.mozilla/firefox/*.default-release/ 
     
     cd ~/ || exit
-    rm -f .autostart
-    mv  autostart .autostart
     rm -rf ~/Post-Install
     echo -e "\e[1;31m${bold}Configuration Files are synced${normal}\e[0m"
     #Installing Wallpapers
@@ -147,3 +117,28 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
 else 
     echo "You are not using Nobara checking others"
 fi
+
+#Checking to see if the system is a Arch Linux
+if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Arch"* ]]; then
+    echo "You are using Arch Linux"
+    #Updating
+    echo -e "\e[1;31m${bold}Updating System${normal}\e[0m"
+    sudo yes | pacman -Syu && echo "System Updated"
+    #Installing Yay
+    read -p "Do you want to install Yay Pacman Helper? (Y/n) " confirmation
+    if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
+        pacman -S --needed git base-devel
+        git clone https://aur.archlinux.org/yay-bin.git
+        cd yay-bin || exit
+        makepkg -si && echo "Installing Binaries"
+        cd ~ || exit
+        echo -e "\e[1;31m${bold}Deleting files used only for the installation process${normal}\e[0m"
+        sudo rm -r yay-bin
+        echo -e "\e[1;31m${bold}Yay Pacman Helper Installed!${normal}\e[0m"
+    #Installing Flatpak
+    read -p "Do you want to install Flatpak? (Y/n) " confirmation
+    if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
+        sudo yes | pacman -S flatpak && echo "Flatpak Installed"
+else 
+    echo "You are not using Arch Linux checking others"
+fi    
