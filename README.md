@@ -6,7 +6,9 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
 # Contents
 
 ## Nobara
+
 - Flatpak
+
 
 - Theming Apps:  
 
@@ -21,6 +23,7 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
   *alacarte
   
   *dconf editor
+  
                                    
 - LibreOffice:           
 
@@ -29,12 +32,14 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
   *Libreoffice tr language pack
   
   *Libreoffice papirus theme
+  
                                    
 - Gaming Apps:          
 -            
   *AdwSteamGtk(flatpak)
   
   *Heroic Game Launcher(flatpak)
+  
                                    
 - Photo Editing and Drawing Apps:  
 
@@ -43,6 +48,7 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
   *Inkscape
   
   *Blender
+  
                                    
 - Virtualization Apps:            
   
@@ -55,6 +61,7 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
   *VirtualBox Guest Additions
   
   *Waydroid
+  
                                    
 - Configs:                         
   
@@ -71,10 +78,12 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
   *Gnome Menu Config Files
   
   *Gnome dconf Files
+  
                                    
 - Wallpapers:                      
   
   *Linux Dynamic Wallpapers
+  
 
 - Settings:                        
   
@@ -91,10 +100,13 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
   *Papirus Icon Theme applying
   
   *Material Mountains Wallpaper applying
+  
 
 ## Arch (Lots of things will be added)
 
+
 - Flatpak
+
 
 - Pacman Helper:                   
 
