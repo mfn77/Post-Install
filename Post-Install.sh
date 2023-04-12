@@ -40,12 +40,13 @@ install_theming()
 {
     #Installing Theming and Customizing Applications
     if yesno "Do you want to install Customization Programs? (Y/n) " ; then
-        flatpak install ExtensionManager -y && echo "Extension Manager Installed" || echo "Extension Manager Couldn't Installed"
+        flatpak install com.mattjakeman.ExtensionManager -y && echo "Extension Manager Installed" || echo "Extension Manager Couldn't Installed"
         flatpak install com.github.GradienceTeam.Gradience -y && echo "Gradience Installed" || echo "Gradience Couldn't Installed"
         flatpak install org.gtk.Gtk3theme.adw-gtk3 -y && echo "Adwaita GTK 3 Theme for flatpaks Installed" || echo "Adwaita GTK 3 Theme for flatpaks Couldn't Installed"
         flatpak install org.gtk.Gtk3theme.adw-gtk3-dark -y && echo "Adwaita GTK 3 Dark Theme for flatpaks Installed" || echo "Adwaita GTK 3 Dark Theme for flatpaks Couldn't Installed"
         sudo dnf install --assumeyes alacarte && echo "Alacarte Menu Editor Installed" || echo "Alacarte Menu Editor Couldn't Installed"
         sudo dnf install --assumeyes dconf-editor && echo "Dconf Editor Installed" || echo "Dconf Editor Couldn't Installed"
+        echo -e "\e[1;31m${bold}Theming And Customizing Applications Installed!${normal}\e[0m"
     else
         echo "Moving on"
     fi
@@ -57,6 +58,7 @@ install_libre_office()
         sudo dnf install --assumeyes libreoffice && echo "Libreoffice Installed" || echo "Libreoffice Couldn't Installed"
         sudo dnf install --assumeyes libreoffice-langpack-tr && echo "Libreoffice TR Language Pack Installed" || echo "Libreoffice TR Language Couldn't Installed"
         wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-libreoffice-theme/master/install-papirus-root.sh | sh && echo "Libreoffice Papirus Theme Installed" || echo "Libreoffice Papirus Theme Couldn't Installed"
+        echo -e "\e[1;31m${bold}LibreOffice Installed${normal}\e[0m"
     else
         echo "Moving on"
     fi
@@ -67,6 +69,7 @@ install_gaming()
     if yesno "Do you want to install Gaming Applications? (Y/n) " ; then
         flatpak install io.github.Foldex.AdwSteamGtk -y && echo "Steam Adwaita Theme Installed" || echo "Steam Adwaita Theme Couldn't Installed"
         flatpak install com.heroicgameslauncher.hgl -y && echo "Heroic Games Launcher Installed" || echo "Heroic Games Launcher Couldn't Installed"
+        echo -e "\e[1;31m${bold}Gaming Applications Installed${normal}\e[0m"
     else
         echo "Moving on"
     fi
@@ -78,6 +81,7 @@ install_photo_tools()
         sudo dnf install --assumeyes gimp && echo "GIMP Installed" || echo "GIMP Couldn't Installed"
         sudo dnf install --assumeyes inkscape && echo "Inkscape Installed" || echo "Inkscape Couldn't Installed"
         sudo dnf install --assumeyes blender && echo "Blender Installed" || echo "Blender Couldn't Installed"
+        echo -e "\e[1;31m${bold}Photo Editing and Drawing Applications Installed${normal}\e[0m"
     else
         echo "Moving on"
     fi
@@ -88,16 +92,19 @@ install_virtualisation()
     if yesno "Do you want to install Virtualization Applications? (Y/n) " ; then
         sudo dnf install --assumeyes gnome-boxes && echo "Boxes Installed" || echo "Boxes Couldn't Installed"
         sudo dnf install --assumeyes VirtualBox && echo "VirtualBox Installed" || echo "VİrtualBox Couldn't Installed"
+        sudo dnf install --assumeyes kmod-VirtualBox && echo "VirtualBox Kernel Mods Installed" || echo "VİrtualBox Kernel ModsCouldn't Installed"
+        sudo dnf install --assumeyes virtualbox-guest-additions && echo "VirtualBox Guest Additions Installed" || echo "VİrtualBox Guest AdditionsCouldn't Installed"
         sudo dnf install --assumeyes waydroid && echo "Waydroid Installed" || echo "Waydroid Couldn't Installed"
+        echo -e "\e[1;31m${bold}Virtualization Applications Installed${normal}\e[0m"
     else
         echo "Moving on"
     fi
 }
 download_configs()
 {    #Downloading and Exctracting Configs
-    echo -e "\e[1;31m${bold}Configurations Syncing${normal}\e[0m"
+    echo "Configurations Syncing"
     cd ~/ || exit
-    echo -e "\e[1;31m${bold}Downloading Configuration Files${normal}\e[0m"
+    echo "Downloading Configuration Files"
     git clone https://github.com/mfn77/Post-Install.git
     cd ~/Post-Install/icons || exit
     tar xvf Bibata-Modern-Ice.tar.xz
@@ -107,6 +114,7 @@ download_configs()
     tar xvf adw-gtk3-dark.tar.xz
     rm adw-gtk3.tar.xz
     rm adw-gtk3-dark.tar.xz
+    echo -e "\e[1;31m${bold}Downloading Configuration Files Finished!${normal}\e[0m"
 }
 copy_configs()
 {
@@ -115,40 +123,40 @@ copy_configs()
     cd ~/Post-Install || exit
     cp -Rv config/{gtk-2.0,gtk-3.0,gtk-4.0,dconf,menus} ~/.config/
     cp -Rv {font,themes,icons} ~/.local/share
-    cp -Rv chrome ~/.mozilla/firefox/*.default-release/ 
-    
+    cp -Rv chrome ~/.mozilla/firefox/*.default-release/
+    echo -e "\e[1;31m${bold}Copying Configuration Files Finished!${normal}\e[0m"
 }
 cleanup_precopied_files()
 {
     #Removing the already copied unnecessary files
     cd ~/ || exit
     rm -rf ~/Post-Install
-    echo -e "\e[1;31m${bold}Configuration Files are synced${normal}\e[0m"
+    echo -e "\e[1;31m${bold}Configuration Files Are Synced!${normal}\e[0m"
 }
 install_wallpaper()
 {
         
     #Installing Wallpapers
     if yesno "Do you want to install Wallpapers? (Y/n) " ; then
-    echo -e "\e[1;31m${bold}Installing Wallpapers${normal}\e[0m"
+    echo "Installing Wallpapers"
         git clone https://github.com/saint-13/Linux_Dynamic_Wallpapers.git  
         cd Linux_Dynamic_Wallpapers || exit
         echo "Files downloaded"
         sudo cp -r ./Dynamic_Wallpapers/ /usr/share/backgrounds/
         sudo cp ./xml/* /usr/share/gnome-background-properties/
-        echo -e "\e[1;31m${bold}Wallpapers has been installed!${normal}\e[0m"
+        echo "Wallpapers has been installed"
         cd ~ || exit
-        echo -e "\e[1;31m${bold}Deleting files used only for the installation process${normal}\e[0m"
+        echo "Deleting files used only for the installation process"
         sudo rm -r Linux_Dynamic_Wallpapers
-        echo -e "\e[1;31m${bold}Wallpapers Installed${normal}\e[0m"
+        echo -e "\e[1;31m${bold}Wallpapers Installed!${normal}\e[0m"
     else
-        echo -e "\e[1;31m${bold}Moving On${normal}\e[0m"
+        echo "Moving On"
     fi
 }
 apply_settings()
 {
     #Applying Some Settings
-    echo -e "\e[1;31m${bold}Applying Some Settings${normal}\e[0m"
+    echo "Applying Some Settings"
     fc-cache -r
     gsettings set org.gnome.desktop.interface text-scaling-factor 1.15
     gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3
@@ -156,7 +164,8 @@ apply_settings()
     gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Ice
     gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
     gsettings set org.gnome.desktop.background picture-uri file:///usr/share/backgrounds/Dynamic_Wallpapers/MaterialMountains/MaterialMountains-1.png
-    echo -e "\e[1;31m${bold}Installation Finished!${normal}\e[0m"
+    echo -e "\e[1;31m${bold}Settings Applied!${normal}\e[0m"
+    echo -e "\e[1;31m${bold}INSTALLATION FINISHED!${normal}\e[0m"
 }
 arch_do_updates()
 {
@@ -175,7 +184,7 @@ arch_install_yay()
         cd yay-bin || exit
         makepkg -si && echo "Installing Binaries"
         cd ~ || exit
-        echo -e "\e[1;31m${bold}Deleting files used only for the installation process${normal}\e[0m"
+        echo "Deleting files used only for the installation process"
         sudo rm -r yay-bin
         echo -e "\e[1;31m${bold}Yay Pacman Helper Installed!${normal}\e[0m"
     else
@@ -226,20 +235,18 @@ post_install_nobara()
 }
 post_isntall_arch()
 {
-        echo "You are using Arch Linux"
-        bashbar 0
-        arch_do_updates
-        bashbar 30
-        arch_install_yay
-        bashbar 60
-        arch_install_flatpack
-        bashbar 100
+    echo "You are using Arch Linux"
+    bashbar 0
+    arch_do_updates
+    bashbar 30
+    arch_install_yay
+    bashbar 60
+    arch_install_flatpack
+    bashbar 100
 }
 
 main()
 {
-    
-
     bold=$(tput bold)
     normal=$(tput sgr0)
     cd ~/ || exit
