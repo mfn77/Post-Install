@@ -1,8 +1,5 @@
 #!/bin/bash
 
-bold=$(tput bold)
-normal=$(tput sgr0)
-
 bashbar(){
     (( $1 > 100 ))&&{ printf 'Enter an integer from 1-100 (percent)\n'; exit 1; }
     shopt -s checkwinsize; (:;:)
@@ -14,12 +11,10 @@ bashbar(){
     (( $1 == 100 ))&& printf '\n'
 }
 
-yesno(){ # yesno returns success (0) for 'Y', 'y', or any character in '[:space:]' failure (1) otherwise
-    local message="${1:-"y/n ?"}"
-    declare -u answer
-    read -r -n 1 -p "${message} " answer
-    [[ ${answer:-Y} =~ Y ]] && return 0
-    return 1
+yes_reply(){
+    read -rp "${1+[Y\n]: }" # this way read prompts first argument to yes_reply and appends '[Y\n]: '
+    REPLY="${REPLY-y}" # default to yes
+    [[ ${REPLY,,} =~ y(es)? ]]&& : # this means if the reply is y/Y/yes/YES, then true (return 0)
 }
 
 update_system(){ #Updating - 1;31 means bold red as is & e[m will reset the styles to normal
@@ -29,7 +24,7 @@ update_system(){ #Updating - 1;31 means bold red as is & e[m will reset the styl
 }
 
 install_flatpak(){ #Installing Flatpak
-    if yesno "Do you want to install Flatpak? (Y/n) " ; then
+    if yes_reply 'Do you want to install Flatpak?' ; then
         sudo dnf install --assumeyes flatpak  > /dev/null 2>&1 & pid=$! && echo "Flatpak Installed"
         wait $pid
     else
@@ -38,78 +33,59 @@ install_flatpak(){ #Installing Flatpak
 }   
 
 install_theming(){ #Installing Theming and Customizing Applications
-    if yesno "Do you want to install Customization Programs? (Y/n) " ; then
-        flatpak install com.mattjakeman.ExtensionManager -y > /dev/null 2>&1 & pid=$! && echo "Extension Manager Installed" || echo "Extension Manager Couldn't Installed"
-        wait $pid
-        flatpak install com.github.GradienceTeam.Gradience -y > /dev/null 2>&1 & pid=$! && echo "Gradience Installed" || echo "Gradience Couldn't Installed"
-        wait $pid
-        flatpak install org.gtk.Gtk3theme.adw-gtk3 -y > /dev/null 2>&1 & pid=$! && echo "Adwaita GTK 3 Theme for flatpaks Installed" || echo "Adwaita GTK 3 Theme for flatpaks Couldn't Installed"
-        wait $pid
-        flatpak install org.gtk.Gtk3theme.adw-gtk3-dark -y > /dev/null 2>&1 & pid=$! && echo "Adwaita GTK 3 Dark Theme for flatpaks Installed" || echo "Adwaita GTK 3 Dark Theme for flatpaks Couldn't Installed"
-        wait $pid
-        sudo dnf install --assumeyes alacarte > /dev/null 2>&1 & pid=$! && echo "Alacarte Menu Editor Installed" || echo "Alacarte Menu Editor Couldn't Installed"
-        wait $pid
-        sudo dnf install --assumeyes dconf-editor > /dev/null 2>&1 & pid=$! && echo "Dconf Editor Installed" || echo "Dconf Editor Couldn't Installed"
-        wait $pid
-        echo -e "\e[1;31m${bold}Theming And Customizing Applications Installed!${normal}\e[0m"
+    if yes_reply 'Do you want to install Customization Programs?' ; then
+        flatpak install com.mattjakeman.ExtensionManager -y && echo "Extension Manager Installed" || echo "Extension Manager Couldn't Installed"
+        flatpak install com.github.GradienceTeam.Gradience -y && echo "Gradience Installed" || echo "Gradience Couldn't Installed"
+        flatpak install org.gtk.Gtk3theme.adw-gtk3 -y && echo "Adwaita GTK 3 Theme for flatpaks Installed" || echo "Adwaita GTK 3 Theme for flatpaks Couldn't Installed"
+        flatpak install org.gtk.Gtk3theme.adw-gtk3-dark -y && echo "Adwaita GTK 3 Dark Theme for flatpaks Installed" || echo "Adwaita GTK 3 Dark Theme for flatpaks Couldn't Installed"
+        sudo dnf install --assumeyes alacarte && echo "Alacarte Menu Editor Installed" || echo "Alacarte Menu Editor Couldn't Installed"
+        sudo dnf install --assumeyes dconf-editor && echo "Dconf Editor Installed" || echo "Dconf Editor Couldn't Installed"
+        printf '\e[1;31mTheming And Customizing Applications Installed!\e[m\n'
     else
         echo "Moving on"
     fi
 }
 
 install_libre_office(){ #Installing LibreOffice
-    if yesno "Do you want to install LibreOffice? (Y/n) " ; then 
-        sudo dnf install --assumeyes libreoffice > /dev/null 2>&1 & pid=$! && echo "Libreoffice Installed" || echo "Libreoffice Couldn't Installed"
-        wait $pid
-        sudo dnf install --assumeyes libreoffice-langpack-tr > /dev/null 2>&1 & pid=$! && echo "Libreoffice TR Language Pack Installed" || echo "Libreoffice TR Language Couldn't Installed"
-        wait $pid
-        wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-libreoffice-theme/master/install-papirus-root.sh | sh > /dev/null 2>&1 & pid=$! && echo "Libreoffice Papirus Theme Installed" || echo "Libreoffice Papirus Theme Couldn't Installed"
-        wait $pid
-        echo -e "\e[1;31m${bold}LibreOffice Installed${normal}\e[0m"
+    if yes_reply 'Do you want to install LibreOffice?' ; then 
+        sudo dnf install --assumeyes libreoffice && echo "Libreoffice Installed" || echo "Libreoffice Couldn't Installed"
+        sudo dnf install --assumeyes libreoffice-langpack-tr && echo "Libreoffice TR Language Pack Installed" || echo "Libreoffice TR Language Couldn't Installed"
+        wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-libreoffice-theme/master/install-papirus-root.sh | sh && echo "Libreoffice Papirus Theme Installed" || echo "Libreoffice Papirus Theme Couldn't Installed"
+        printf '\e[1;31mLibreOffice Installed\e[m\n'
     else
         echo "Moving on"
     fi
 }
 
 install_gaming(){ #Installing Gaming Applications
-    if yesno "Do you want to install Gaming Applications? (Y/n) " ; then
-        flatpak install io.github.Foldex.AdwSteamGtk -y > /dev/null 2>&1 & pid=$! && echo "Steam Adwaita Theme Installed" || echo "Steam Adwaita Theme Couldn't Installed"
-        wait $pid
-        flatpak install com.heroicgameslauncher.hgl -y > /dev/null 2>&1 & pid=$! && echo "Heroic Games Launcher Installed" || echo "Heroic Games Launcher Couldn't Installed"
-        wait $pid
-        echo -e "\e[1;31m${bold}Gaming Applications Installed${normal}\e[0m"
+    if yes_reply 'Do you want to install Gaming Applications?' ; then
+        flatpak install io.github.Foldex.AdwSteamGtk -y && echo "Steam Adwaita Theme Installed" || echo "Steam Adwaita Theme Couldn't Installed"
+        flatpak install com.heroicgameslauncher.hgl -y && echo "Heroic Games Launcher Installed" || echo "Heroic Games Launcher Couldn't Installed"
+        printf '\e[1;31mGaming Applications Installed\e[m\n'
     else
         echo "Moving on"
     fi
 }
 
 install_photo_tools(){ #Installing Photo Editing and Drawing Applications
-    if yesno "Do you want to install Photo Editing and Drawing Applications? (Y/n) " ; then
-        sudo dnf install --assumeyes gimp > /dev/null 2>&1 & pid=$! && echo "GIMP Installed" || echo "GIMP Couldn't Installed"
-        wait $pid
-        sudo dnf install --assumeyes inkscape > /dev/null 2>&1 & pid=$! && echo "Inkscape Installed" || echo "Inkscape Couldn't Installed"
-        wait $pid
-        sudo dnf install --assumeyes blender > /dev/null 2>&1 & pid=$! && echo "Blender Installed" || echo "Blender Couldn't Installed"
-        wait $pid
-        echo -e "\e[1;31m${bold}Photo Editing and Drawing Applications Installed${normal}\e[0m"
+    if yes_reply 'Do you want to install Photo Editing and Drawing Applications?' ; then
+        sudo dnf install --assumeyes gimp && echo "GIMP Installed" || echo "GIMP Couldn't Installed"
+        sudo dnf install --assumeyes inkscape && echo "Inkscape Installed" || echo "Inkscape Couldn't Installed"
+        sudo dnf install --assumeyes blender && echo "Blender Installed" || echo "Blender Couldn't Installed"
+        printf '\e[1;31mPhoto Editing and Drawing Applications Installed\e[m\n'
     else
         echo "Moving on"
     fi
 }
 
-install_virtualisation(){ #Installing Virtualization Applications
-    if yesno "Do you want to install Virtualization Applications? (Y/n) " ; then
-        sudo dnf install --assumeyes gnome-boxes > /dev/null 2>&1 & pid=$! && echo "Boxes Installed" || echo "Boxes Couldn't Installed"
-        wait $pid
-        sudo dnf install --assumeyes VirtualBox > /dev/null 2>&1 & pid=$! && echo "VirtualBox Installed" || echo "VİrtualBox Couldn't Installed"
-        wait $pid
-        sudo dnf install --assumeyes kmod-VirtualBox > /dev/null 2>&1 & pid=$! && echo "VirtualBox Kernel Mods Installed" || echo "VİrtualBox Kernel ModsCouldn't Installed"
-        wait $pid
-        sudo dnf install --assumeyes virtualbox-guest-additions > /dev/null 2>&1 & pid=$! && echo "VirtualBox Guest Additions Installed" || echo "VİrtualBox Guest AdditionsCouldn't Installed"
-        wait $pid
-        sudo dnf install --assumeyes waydroid > /dev/null 2>&1 & pid=$! && echo "Waydroid Installed" || echo "Waydroid Couldn't Installed"
-        wait $pid
-        echo -e "\e[1;31m${bold}Virtualization Applications Installed${normal}\e[0m"
+install_virtualization(){ #Installing Virtualization Applications
+    if yes_reply 'Do you want to install Virtualization Applications?' ; then
+        sudo dnf install --assumeyes gnome-boxes && echo "Boxes Installed" || echo "Boxes Couldn't Installed"
+        sudo dnf install --assumeyes VirtualBox && echo "VirtualBox Installed" || echo "VİrtualBox Couldn't Installed"
+        sudo dnf install --assumeyes kmod-VirtualBox && echo "VirtualBox Kernel Mods Installed" || echo "VİrtualBox Kernel ModsCouldn't Installed"
+        sudo dnf install --assumeyes virtualbox-guest-additions && echo "VirtualBox Guest Additions Installed" || echo "VİrtualBox Guest AdditionsCouldn't Installed"
+        sudo dnf install --assumeyes waydroid && echo "Waydroid Installed" || echo "Waydroid Couldn't Installed"
+        printf '\e[1;31mVirtualization Applications Installed\e[m\n'
     else
         echo "Moving on"
     fi
@@ -119,44 +95,36 @@ download_configs(){ #Downloading and Exctracting Configs
     echo "Configurations Syncing"
     cd ~/ || exit
     echo "Downloading Configuration Files"
-    git clone https://github.com/mfn77/Post-Install.git > /dev/null 2>&1 & pid=$!
-    wait $pid
+    git clone https://github.com/mfn77/Post-Install.git
     cd ~/Post-Install/icons || exit
-    tar xvf Bibata-Modern-Ice.tar.xz  > /dev/null 2>&1 & pid=$!
-    wait $pid
+    tar xvf Bibata-Modern-Ice.tar.xz
     rm Bibata-Modern-Ice.tar.xz
     cd ~/Post-Install/themes || exit
-    tar xvf adw-gtk3.tar.xz > /dev/null 2>&1 & pid=$!
-    wait $pid
-    tar xvf adw-gtk3-dark.tar.xz > /dev/null 2>&1 & pid=$!
-    wait $pid
+    tar xvf adw-gtk3.tar.xz
+    tar xvf adw-gtk3-dark.tar.xz
     rm adw-gtk3.tar.xz
     rm adw-gtk3-dark.tar.xz
-    echo -e "\e[1;31m${bold}Downloading Configuration Files Finished!${normal}\e[0m"
+    printf '\e[1;31mDownloading Configuration Files Finished!\e[m\n'
 }
 
 copy_configs(){ #Copying Configs
     cd ~/Post-Install || exit
-    cp -Rv config/{gtk-2.0,gtk-3.0,gtk-4.0,dconf,menus} ~/.config/ > /dev/null 2>&1 & pid=$!
-    wait $pid
-    cp -Rv {font,themes,icons} ~/.local/share > /dev/null 2>&1 & pid=$!
-    wait $pid
-    cp -Rv chrome ~/.mozilla/firefox/*.default-release/ > /dev/null 2>&1 & pid=$!
-    wait $pid
-    echo -e "\e[1;31m${bold}Copying Configuration Files Finished!${normal}\e[0m"
+    cp -Rv config/{gtk-2.0,gtk-3.0,gtk-4.0,dconf,menus} ~/.config/
+    cp -Rv {font,themes,icons} ~/.local/share
+    cp -Rv chrome ~/.mozilla/firefox/*.default-release/
+    printf '\e[1;31mCopying Configuration Files Finished!\e[m\n'
 }
 
 cleanup_precopied_files(){ #Removing the already copied unnecessary files
     cd ~/ || exit
     rm -rf ~/Post-Install
-    echo -e "\e[1;31m${bold}Configuration Files Are Synced!${normal}\e[0m"
+    printf '\e[1;31mConfiguration Files Are Synced!\e[m\n'
 }
 
 install_wallpaper(){ #Installing Wallpapers
-    if yesno "Do you want to install Wallpapers? (Y/n) " ; then
+    if yes_reply "Do you want to install Wallpapers?' ; then
     echo "Installing Wallpapers"
-        git clone https://github.com/saint-13/Linux_Dynamic_Wallpapers.git > /dev/null 2>&1 & pid=$!
-        wait $pid  
+        git clone https://github.com/saint-13/Linux_Dynamic_Wallpapers.git
         cd Linux_Dynamic_Wallpapers || exit
         echo "Files downloaded"
         sudo cp -r ./Dynamic_Wallpapers/ /usr/share/backgrounds/
@@ -165,7 +133,7 @@ install_wallpaper(){ #Installing Wallpapers
         cd ~ || exit
         echo "Deleting files used only for the installation process"
         sudo rm -r Linux_Dynamic_Wallpapers
-        echo -e "\e[1;31m${bold}Wallpapers Installed!${normal}\e[0m"
+        printf '\e[1;31mWallpapers Installed!\e[m\n'
     else
         echo "Moving On"
     fi
@@ -180,36 +148,33 @@ apply_settings(){ #Applying Some Settings
     gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Ice
     gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
     gsettings set org.gnome.desktop.background picture-uri file:///usr/share/backgrounds/Dynamic_Wallpapers/MaterialMountains/MaterialMountains-1.png
-    echo -e "\e[1;31m${bold}Settings Applied!${normal}\e[0m"
+    printf '\e[1;31mSettings Applied!\e[m\n'
 }
 
 arch_do_updates(){ #Updating
-    echo -e "\e[1;31m${bold}Updating System${normal}\e[0m"
+    printf '\e[1;31mUpdating System\e[m\n'
     sudo yes | pacman -Syu && echo "System Updated"
     
 }
 
 arch_install_yay(){ #Installing Yay
-    if yesno "Do you want to install Yay Pacman Helper? (Y/n) " ; then
+    if yes_reply 'Do you want to install Yay Pacman Helper?' ; then
         pacman -S --needed git base-devel
-        git clone https://aur.archlinux.org/yay-bin.git > /dev/null 2>&1 & pid=$!
-        wait $pid
+        git clone https://aur.archlinux.org/yay-bin.git
         cd yay-bin || exit
-        makepkg -si > /dev/null 2>&1 & pid=$! && echo "Installing Binaries"
-        wait $pid
+        makepkg -si && echo "Installing Binaries"
         cd ~ || exit
         echo "Deleting files used only for the installation process"
         sudo rm -r yay-bin
-        echo -e "\e[1;31m${bold}Yay Pacman Helper Installed!${normal}\e[0m"
+        printf '\e[1;31mYay Pacman Helper Installed!\e[m\n'
     else
         echo "Moving On"
     fi
 }
 
 arch_install_flatpak(){ #Installing Flatpak
-    if yesno "Do you want to install Flatpak? (Y/n) " ; then
-        sudo yes | pacman -S flatpak > /dev/null 2>&1 & pid=$! && echo "Flatpak Installed"
-        wait $pid
+    if yes_reply 'Do you want to install Flatpak?' ; then
+        sudo yes | pacman -S flatpak && echo "Flatpak Installed"
     else
         echo "Moving On"
     fi
@@ -255,6 +220,5 @@ main(){
         echo "You are not using Arch Linux"
     fi
     
-    echo -e "\e[1;31m${bold}FINISHED!${normal}\e[0m"
-}
-main "$@"
+    printf '\e[1;31mFINISHED!\e[m\n'
+}; main "$@"
