@@ -1,5 +1,8 @@
 #!/bin/bash
 
+bold=$(tput bold)
+normal=$(tput sgr0)
+
 bashbar()
 {
     (( $1 > 100 ))&&{ printf 'Enter an integer from 1-100 (percent)\n'; exit 1; }
