@@ -8,9 +8,11 @@ cd ~/ || exit
 #Checking to see if the system is a Nobara Linux
 if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     echo "You are using Nobara"
+    
     #Updating
     echo -e "\e[1;31m${bold}Updating System${normal}\e[0m"
     sudo dnf up -y && echo "System Updated"
+    
     #Installing Flatpak
     read -p "Do you want to install Flatpak? (Y/n) " confirmation
     if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
@@ -18,6 +20,7 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     else
         echo "Moving On"
     fi
+    
     #Installing Theming and Customizing Applications
     read -p "Do you want to install Customization Programs? (Y/n) " confirmation
     if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
@@ -30,6 +33,7 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     else
         echo "Moving on"
     fi
+
     #Installing LibreOffice
     read -p "Do you want to install LibreOffice? (Y/n) " confirmation
     if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
@@ -47,6 +51,7 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     else
         echo "Moving on"
     fi
+    
     #Installing Photo Editing and Drawing Applications
     read -p "Do you want to install Photo Editing and Drawing Applications? (Y/n) " confirmation
     if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
@@ -56,6 +61,7 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     else
         echo "Moving on"
     fi
+    
     #Installing Virtualization Applications
     read -p "Do you want to install Virtualization Applications? (Y/n) " confirmation
     if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
@@ -65,7 +71,8 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     else
         echo "Moving on"
     fi
-    #Downloading And Copying Configs
+    
+    #Downloading and Exctracting Configs
     echo -e "\e[1;31m${bold}Configurations Syncing${normal}\e[0m"
     cd ~/ || exit
     echo -e "\e[1;31m${bold}Downloading Configuration Files${normal}\e[0m"
@@ -79,14 +86,17 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
     rm adw-gtk3.tar.xz
     rm adw-gtk3-dark.tar.xz
     
+    #Copying Configs
     cd ~/Post-Install || exit
     cp -Rv config/{gtk-2.0,gtk-3.0,gtk-4.0,dconf,menus} ~/.config/
     cp -Rv {font,themes,icons} ~/.local/share
     cp -Rv chrome ~/.mozilla/firefox/*.default-release/ 
     
+    #Removing the already copied unnecessary files
     cd ~/ || exit
     rm -rf ~/Post-Install
     echo -e "\e[1;31m${bold}Configuration Files are synced${normal}\e[0m"
+    
     #Installing Wallpapers
     read -p "Do you want to install Wallpapers? (Y/n) " confirmation
     if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
@@ -103,7 +113,8 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Nobara"* ]]; then
         echo -e "\e[1;31m${bold}Wallpapers Installed${normal}\e[0m"
     else
         echo -e "\e[1;31m${bold}Moving On${normal}\e[0m"
-    fi 
+    fi
+     
     #Applying Some Settings
     echo -e "\e[1;31m${bold}Applying Some Settings${normal}\e[0m"
     fc-cache -r
@@ -121,9 +132,11 @@ fi
 #Checking to see if the system is a Arch Linux
 if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Arch"* ]]; then
     echo "You are using Arch Linux"
+    
     #Updating
     echo -e "\e[1;31m${bold}Updating System${normal}\e[0m"
     sudo yes | pacman -Syu && echo "System Updated"
+    
     #Installing Yay
     read -p "Do you want to install Yay Pacman Helper? (Y/n) " confirmation
     if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
@@ -135,10 +148,19 @@ if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Arch"* ]]; then
         echo -e "\e[1;31m${bold}Deleting files used only for the installation process${normal}\e[0m"
         sudo rm -r yay-bin
         echo -e "\e[1;31m${bold}Yay Pacman Helper Installed!${normal}\e[0m"
+    else
+        echo "Moving On"
+    fi
+        
     #Installing Flatpak
     read -p "Do you want to install Flatpak? (Y/n) " confirmation
     if [[ $confirmation =~ ^[Yy]$ ]] | [ -z "$confirmation" ]; then
         sudo yes | pacman -S flatpak && echo "Flatpak Installed"
+    else
+        echo "Moving On"
+    fi
 else 
     echo "You are not using Arch Linux checking others"
-fi    
+fi
+
+echo -e "\e[1;31m${bold}Finished!${normal}\e[0m"
