@@ -57,7 +57,7 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
 
 
 
-# How to Install
+# **How to Install**
 
 You don't have to download the repo, install script automatically downloads it. You have tree options for automatic install:
 
