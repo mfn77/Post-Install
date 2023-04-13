@@ -1,7 +1,7 @@
 #!/bin/bash
 
 bashbar(){
-    (( $1 > 100 ))&&{ printf 'Enter an integer from 1-100 (percent)\n'; exit 1; }
+    (( $1 > 100 ))&&{ printf 'Enter an integer from 1-100 (percent)\n'; return 1; }
     shopt -s checkwinsize; (:;:)
     ((width=COLUMNS-4)); ((progress=$1*width/100))
     if (( $1 > 68 )); then color=2
