@@ -122,7 +122,7 @@ cleanup_precopied_files(){ #Removing the already copied unnecessary files
 }
 
 install_wallpaper(){ #Installing Wallpapers
-    if yes_reply "Do you want to install Wallpapers?' ; then
+    if yes_reply "Do you want to install Wallpapers?" ; then
     echo "Installing Wallpapers"
         git clone https://github.com/saint-13/Linux_Dynamic_Wallpapers.git
         cd Linux_Dynamic_Wallpapers || exit
