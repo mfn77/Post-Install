@@ -444,6 +444,7 @@ arch_enable_extensions(){ #Enabling Installed Extensions
         printf '\e[1;31mExtensions Enabled!\e[m\n'
     else
         echo "Moving On"
+    fi
 }
 
 arch_apply_settings(){ #Applying Some Settings
