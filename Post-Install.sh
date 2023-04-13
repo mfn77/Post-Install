@@ -90,34 +90,34 @@ install_virtualization(){ #Installing Virtualization Applications
     fi
 }
 
-download_configs(){ #Downloading and Exctracting Configs
-    echo "Configurations Syncing"
-    cd ~/ || exit
-    echo "Downloading Configuration Files"
-    git clone https://github.com/mfn77/Post-Install.git
-    cd ~/Post-Install/icons || exit
-    tar xvf Bibata-Modern-Ice.tar.xz
-    rm Bibata-Modern-Ice.tar.xz
-    cd ~/Post-Install/themes || exit
-    tar xvf adw-gtk3.tar.xz
-    tar xvf adw-gtk3-dark.tar.xz
-    rm adw-gtk3.tar.xz
-    rm adw-gtk3-dark.tar.xz
-    printf '\e[1;31mDownloading Configuration Files Finished!\e[m\n'
-}
-
-copy_configs(){ #Copying Configs
-    cd ~/Post-Install || exit
-    cp -Rv config/{gtk-2.0,gtk-3.0,gtk-4.0,dconf,menus} ~/.config/
-    cp -Rv {font,themes,icons} ~/.local/share
-    cp -Rv chrome ~/.mozilla/firefox/*.default-release/
-    printf '\e[1;31mCopying Configuration Files Finished!\e[m\n'
-}
-
-cleanup_precopied_files(){ #Removing the already copied unnecessary files
-    cd ~/ || exit
-    rm -rf ~/Post-Install
-    printf '\e[1;31mConfiguration Files Are Synced!\e[m\n'
+install_configs(){ #Downloading and Exctracting Configs
+    if yes_reply "Do you want to download and install configs?" ; then
+        echo "Configurations Syncing"
+        cd ~/ || exit
+        echo "Downloading Configuration Files"
+        git clone https://github.com/mfn77/Post-Install.git
+        cd ~/Post-Install/icons || exit
+        tar xvf Bibata-Modern-Ice.tar.xz
+        rm Bibata-Modern-Ice.tar.xz
+        cd ~/Post-Install/themes || exit
+        tar xvf adw-gtk3.tar.xz
+        tar xvf adw-gtk3-dark.tar.xz
+        rm adw-gtk3.tar.xz
+        rm adw-gtk3-dark.tar.xz
+        printf '\e[1;31mDownloading Configuration Files Finished!\e[m\n'
+        #Copying Configs
+        cd ~/Post-Install || exit
+        cp -Rv config/{gtk-2.0,gtk-3.0,gtk-4.0,dconf,menus} ~/.config/
+        cp -Rv {font,themes,icons} ~/.local/share
+        cp -Rv chrome ~/.mozilla/firefox/*.default-release/
+        printf '\e[1;31mCopying Configuration Files Finished!\e[m\n'
+        #Removing the already copied unnecessary files
+        cd ~/ || exit
+        rm -rf ~/Post-Install
+        printf '\e[1;31mConfiguration Files Are Synced!\e[m\n'
+    else
+        echo "Moving on"
+    fi      
 }
 
 install_extensions(){ #Installing Extensions
@@ -185,33 +185,41 @@ install_wallpaper(){ #Installing Wallpapers
 }
 
 enable_extensions(){ #Enabling Installed Extensions
-    echo "Applying Some Settings"
-    gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
-    gnome-extensions enable widgets@aylur
-    gnome-extensions enable io.github.mreditor.gnome-shell-extensions.scroll-panel
-    gnome-extensions enable ddterm@amezin.github.com
-    gnome-extensions enable blur-my-shell@aunetx
-    gnome-extensions enable bluetooth-quick-connect@bjarosze.gmail.com
-    gnome-extensions enable MaximizeToEmptyWorkspace-extension@kaisersite.de
-    gnome-extensions enable gnome-ui-tune@itstime.tech
-    gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
-    gnome-extenisons enable gamemode@christian.kellner.me
-    gnome-extensions enable just-perfection-desktop@just-perfection
-    gnome-extenisons enable wireless-hid@chlumskyvaclav.gmail.com
-    printf '\e[1;31mExtensions Enabled!\e[m\n'
+    if yes_reply "Do you want to Enable Extensions?" ; then
+        echo "Enabling some extensions"
+        gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
+        gnome-extensions enable widgets@aylur
+        gnome-extensions enable io.github.mreditor.gnome-shell-extensions.scroll-panel
+        gnome-extensions enable ddterm@amezin.github.com
+        gnome-extensions enable blur-my-shell@aunetx
+        gnome-extensions enable bluetooth-quick-connect@bjarosze.gmail.com
+        gnome-extensions enable MaximizeToEmptyWorkspace-extension@kaisersite.de
+        gnome-extensions enable gnome-ui-tune@itstime.tech
+        gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
+        gnome-extenisons enable gamemode@christian.kellner.me
+        gnome-extensions enable just-perfection-desktop@just-perfection
+        gnome-extenisons enable wireless-hid@chlumskyvaclav.gmail.com
+        printf '\e[1;31mExtensions Enabled!\e[m\n'
+    else
+        echo "Moving On"
 }
 
 apply_settings(){ #Applying Some Settings
-    echo "Applying Some Settings"
-    fc-cache -r
-    gsettings set org.gnome.desktop.interface text-scaling-factor 1.15
-    gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3
-    gsettings set org.gnome.shell.extensions.user-theme name MFN
-    gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Ice
-    gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
-    gsettings set org.gnome.desktop.background picture-uri file:///usr/share/backgrounds/Dynamic_Wallpapers/MaterialMountains/MaterialMountains-1.png
-    printf '\e[1;31mSettings Applied!\e[m\n'
+    if yes_reply "Do you want to apply settings?" ; then
+        echo "Applying Some Settings"
+        fc-cache -r
+        gsettings set org.gnome.desktop.interface text-scaling-factor 1.15
+        gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3
+        gsettings set org.gnome.shell.extensions.user-theme name MFN
+        gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Ice
+        gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+        gsettings set org.gnome.desktop.background picture-uri file:///usr/share/backgrounds/Dynamic_Wallpapers/MaterialMountains/MaterialMountains-1.png
+        printf '\e[1;31mSettings Applied!\e[m\n'
+    else
+        echo "Nothing left to do!"
+    fi
 }
+
 
 arch_do_updates(){ #Updating
     printf '\e[1;31mUpdating System\e[m\n'
@@ -222,13 +230,13 @@ arch_do_updates(){ #Updating
 arch_install_yay(){ #Installing Yay
     if yes_reply "Do you want to install Yay Pacman Helper?" ; then
         sudo pacman -S --needed git base-devel --noconfirm
-        git clone https://aur.archlinux.org/yay-bin.git
-        cd yay-bin || exit
+        git clone https://aur.archlinux.org/yay.git
+        cd yay || exit
         makepkg -si && echo "Installing Binaries"
         cd ~ || exit
         echo "Deleting files used only for the installation process"
         sudo rm -r yay-bin
-        printf '\e[1;31mYay Pacman Helper Installed!\e[m\n'
+        printf '\e[1;31mYay Installed!\e[m\n'
     else
         echo "Moving On"
     fi
@@ -304,35 +312,34 @@ arch_install_virtualization(){ #Installing Virtualization Applications
     fi
 }
 
-arch_download_configs(){ #Downloading and Exctracting Configs
-    echo "Configurations Syncing"
-    cd ~/ || exit
-    echo "Downloading Configuration Files"
-    sudo pacman -S git --noconfirm
-    git clone https://github.com/mfn77/Post-Install.git
-    cd ~/Post-Install/icons || exit
-    tar xvf Bibata-Modern-Ice.tar.xz
-    rm Bibata-Modern-Ice.tar.xz
-    cd ~/Post-Install/themes || exit
-    tar xvf adw-gtk3.tar.xz
-    tar xvf adw-gtk3-dark.tar.xz
-    rm adw-gtk3.tar.xz
-    rm adw-gtk3-dark.tar.xz
-    printf '\e[1;31mDownloading Configuration Files Finished!\e[m\n'
-}
-
-arch_copy_configs(){ #Copying Configs
-    cd ~/Post-Install || exit
-    cp -Rv config/{gtk-2.0,gtk-3.0,gtk-4.0,dconf,menus} ~/.config/
-    cp -Rv {font,themes,icons} ~/.local/share
-    cp -Rv chrome ~/.mozilla/firefox/*.default-release/
-    printf '\e[1;31mCopying Configuration Files Finished!\e[m\n'
-}
-
-arch_cleanup_precopied_files(){ #Removing the already copied unnecessary files
-    cd ~/ || exit
-    rm -rf ~/Post-Install
-    printf '\e[1;31mConfiguration Files Are Synced!\e[m\n'
+arch_install_configs(){ #Downloading and Exctracting Configs
+    if yes_reply "Do you want to download and install configs?" ; then
+        echo "Configurations Syncing"
+        cd ~/ || exit
+        echo "Downloading Configuration Files"
+        git clone https://github.com/mfn77/Post-Install.git
+        cd ~/Post-Install/icons || exit
+        tar xvf Bibata-Modern-Ice.tar.xz
+        rm Bibata-Modern-Ice.tar.xz
+        cd ~/Post-Install/themes || exit
+        tar xvf adw-gtk3.tar.xz
+        tar xvf adw-gtk3-dark.tar.xz
+        rm adw-gtk3.tar.xz
+        rm adw-gtk3-dark.tar.xz
+        printf '\e[1;31mDownloading Configuration Files Finished!\e[m\n'
+        #Copying Configs
+        cd ~/Post-Install || exit
+        cp -Rv config/{gtk-2.0,gtk-3.0,gtk-4.0,dconf,menus} ~/.config/
+        cp -Rv {font,themes,icons} ~/.local/share
+        cp -Rv chrome ~/.mozilla/firefox/*.default-release/
+        printf '\e[1;31mCopying Configuration Files Finished!\e[m\n'
+        #Removing the already copied unnecessary files
+        cd ~/ || exit
+        rm -rf ~/Post-Install
+        printf '\e[1;31mConfiguration Files Are Synced!\e[m\n'
+    else
+        echo "Moving on"
+    fi      
 }
 
 arch_install_extensions(){ #Installing Extensions
@@ -398,7 +405,7 @@ arch_install_extensions(){ #Installing Extensions
         echo "Wirelles HID has been installed"
         sudo rm wireless-hidchlumskyvaclav.gmail.com.v11.shell-extension.zip
     else
-        echo "Moving On"
+        echo "Moving On!"
     fi
 }
 
@@ -421,32 +428,39 @@ arch_install_wallpaper(){ #Installing Wallpapers
 }
 
 arch_enable_extensions(){ #Enabling Installed Extensions
-    echo "Applying Some Settings"
-    gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
-    gnome-extensions enable widgets@aylur
-    gnome-extensions enable io.github.mreditor.gnome-shell-extensions.scroll-panel
-    gnome-extensions enable ddterm@amezin.github.com
-    gnome-extensions enable blur-my-shell@aunetx
-    gnome-extensions enable bluetooth-quick-connect@bjarosze.gmail.com
-    gnome-extensions enable MaximizeToEmptyWorkspace-extension@kaisersite.de
-    gnome-extensions enable gnome-ui-tune@itstime.tech
-    gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
-    gnome-extenisons enable gamemode@christian.kellner.me
-    gnome-extensions enable just-perfection-desktop@just-perfection
-    gnome-extenisons enable wireless-hid@chlumskyvaclav.gmail.com
-    printf '\e[1;31mExtensions Enabled!\e[m\n'
+    if yes_reply "Do you want to enable extensions?" ; then
+        echo "Enabling some extensions"
+        gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
+        gnome-extensions enable widgets@aylur
+        gnome-extensions enable io.github.mreditor.gnome-shell-extensions.scroll-panel
+        gnome-extensions enable ddterm@amezin.github.com
+        gnome-extensions enable blur-my-shell@aunetx
+        gnome-extensions enable bluetooth-quick-connect@bjarosze.gmail.com
+        gnome-extensions enable MaximizeToEmptyWorkspace-extension@kaisersite.de
+        gnome-extensions enable gnome-ui-tune@itstime.tech
+        gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
+        gnome-extenisons enable gamemode@christian.kellner.me
+        gnome-extensions enable just-perfection-desktop@just-perfection
+        gnome-extenisons enable wireless-hid@chlumskyvaclav.gmail.com
+        printf '\e[1;31mExtensions Enabled!\e[m\n'
+    else
+        echo "Moving On"
 }
 
 arch_apply_settings(){ #Applying Some Settings
-    echo "Applying Some Settings"
-    fc-cache -r
-    gsettings set org.gnome.desktop.interface text-scaling-factor 1.15
-    gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3
-    gsettings set org.gnome.shell.extensions.user-theme name MFN
-    gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Ice
-    gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
-    gsettings set org.gnome.desktop.background picture-uri file:///usr/share/backgrounds/Dynamic_Wallpapers/MaterialMountains/MaterialMountains-1.png
-    printf '\e[1;31mSettings Applied!\e[m\n'
+    if yes_reply "Do you want to apply settings?" ; then
+        echo "Applying Some Settings"
+        fc-cache -r
+        gsettings set org.gnome.desktop.interface text-scaling-factor 1.15
+        gsettings set org.gnome.desktop.interface gtk-theme adw-gtk3
+        gsettings set org.gnome.shell.extensions.user-theme name MFN
+        gsettings set org.gnome.desktop.interface cursor-theme Bibata-Modern-Ice
+        gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+        gsettings set org.gnome.desktop.background picture-uri file:///usr/share/backgrounds/Dynamic_Wallpapers/MaterialMountains/MaterialMountains-1.png
+        printf '\e[1;31mSettings Applied!\e[m\n'
+    else
+        echo "Nothing left to do!"
+    fi
 }
 
 post_install_nobara(){
@@ -458,9 +472,7 @@ post_install_nobara(){
     install_gaming; bashbar 40
     install_photo_tools; bashbar 50
     install_virtualization; bashbar 60
-    download_configs; bashbar 65
-    copy_configs; bashbar 70
-    cleanup_precopied_files; bashbar 75
+    install_configs; bashbar 75
     install_extensions; bashbar 85
     install_wallpaper; bashbar 90
     enable_extensions; bashbar 95
@@ -477,9 +489,7 @@ post_install_arch(){
     arch_install_gaming; bashbar 40
     arch_install_photo_tools; bashbar 50
     arch_install_virtualization; bashbar 60
-    arch_download_configs; bashbar 65
-    arch_copy_configs; bashbar 70
-    arch_cleanup_precopied_files; bashbar 75
+    arch_install_configs; bashbar 75
     arch_install_extensions; bashbar 85
     arch_install_wallpaper; bashbar 90
     arch_enable_extensions; bashbar 95
