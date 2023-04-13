@@ -12,9 +12,9 @@ bashbar(){
 }
 
 yes_reply(){
-    read -rp "${1+[Y\n]: }" # this way read prompts first argument to yes_reply and appends '[Y\n]: '
+    read -rp "${1:+$1 } [Y/n]: " # this way read prompts first argument to yes_reply and appends '[Y\n]: '
     REPLY="${REPLY-y}" # default to yes
-    [[ ${REPLY,,} =~ y(es)? ]]&& : # this means if the reply is y/Y/yes/YES, then true (return 0)
+    [[ -z $REPLY || ${REPLY,,} =~ y(es)? ]] && : # this means if the reply is y/Y/yes/YES or enter key is pressed, then true (return 0)
 }
 
 update_system(){ #Updating - 1;31 means bold red as is & e[m will reset the styles to normal
@@ -24,7 +24,7 @@ update_system(){ #Updating - 1;31 means bold red as is & e[m will reset the styl
 }
 
 install_flatpak(){ #Installing Flatpak
-    if yes_reply 'Do you want to install Flatpak?' ; then
+    if yes_reply "Do you want to install Flatpak?" ; then
         sudo dnf install --assumeyes flatpak  > /dev/null 2>&1 & pid=$! && echo "Flatpak Installed"
         wait $pid
     else
@@ -33,7 +33,7 @@ install_flatpak(){ #Installing Flatpak
 }   
 
 install_theming(){ #Installing Theming and Customizing Applications
-    if yes_reply 'Do you want to install Customization Programs?' ; then
+    if yes_reply "Do you want to install Customization Programs?" ; then
         flatpak install com.mattjakeman.ExtensionManager -y && echo "Extension Manager Installed" || echo "Extension Manager Couldn't Installed"
         flatpak install com.github.GradienceTeam.Gradience -y && echo "Gradience Installed" || echo "Gradience Couldn't Installed"
         flatpak install org.gtk.Gtk3theme.adw-gtk3 -y && echo "Adwaita GTK 3 Theme for flatpaks Installed" || echo "Adwaita GTK 3 Theme for flatpaks Couldn't Installed"
@@ -47,7 +47,7 @@ install_theming(){ #Installing Theming and Customizing Applications
 }
 
 install_libre_office(){ #Installing LibreOffice
-    if yes_reply 'Do you want to install LibreOffice?' ; then 
+    if yes_reply "Do you want to install LibreOffice?" ; then 
         sudo dnf install --assumeyes libreoffice && echo "Libreoffice Installed" || echo "Libreoffice Couldn't Installed"
         sudo dnf install --assumeyes libreoffice-langpack-tr && echo "Libreoffice TR Language Pack Installed" || echo "Libreoffice TR Language Couldn't Installed"
         wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-libreoffice-theme/master/install-papirus-root.sh | sh && echo "Libreoffice Papirus Theme Installed" || echo "Libreoffice Papirus Theme Couldn't Installed"
@@ -58,7 +58,7 @@ install_libre_office(){ #Installing LibreOffice
 }
 
 install_gaming(){ #Installing Gaming Applications
-    if yes_reply 'Do you want to install Gaming Applications?' ; then
+    if yes_reply "Do you want to install Gaming Applications?" ; then
         flatpak install io.github.Foldex.AdwSteamGtk -y && echo "Steam Adwaita Theme Installed" || echo "Steam Adwaita Theme Couldn't Installed"
         flatpak install com.heroicgameslauncher.hgl -y && echo "Heroic Games Launcher Installed" || echo "Heroic Games Launcher Couldn't Installed"
         printf '\e[1;31mGaming Applications Installed\e[m\n'
@@ -68,7 +68,7 @@ install_gaming(){ #Installing Gaming Applications
 }
 
 install_photo_tools(){ #Installing Photo Editing and Drawing Applications
-    if yes_reply 'Do you want to install Photo Editing and Drawing Applications?' ; then
+    if yes_reply "Do you want to install Photo Editing and Drawing Applications?" ; then
         sudo dnf install --assumeyes gimp && echo "GIMP Installed" || echo "GIMP Couldn't Installed"
         sudo dnf install --assumeyes inkscape && echo "Inkscape Installed" || echo "Inkscape Couldn't Installed"
         sudo dnf install --assumeyes blender && echo "Blender Installed" || echo "Blender Couldn't Installed"
@@ -79,7 +79,7 @@ install_photo_tools(){ #Installing Photo Editing and Drawing Applications
 }
 
 install_virtualization(){ #Installing Virtualization Applications
-    if yes_reply 'Do you want to install Virtualization Applications?' ; then
+    if yes_reply "Do you want to install Virtualization Applications?" ; then
         sudo dnf install --assumeyes gnome-boxes && echo "Boxes Installed" || echo "Boxes Couldn't Installed"
         sudo dnf install --assumeyes VirtualBox && echo "VirtualBox Installed" || echo "VİrtualBox Couldn't Installed"
         sudo dnf install --assumeyes kmod-VirtualBox && echo "VirtualBox Kernel Mods Installed" || echo "VİrtualBox Kernel ModsCouldn't Installed"
@@ -158,7 +158,7 @@ arch_do_updates(){ #Updating
 }
 
 arch_install_yay(){ #Installing Yay
-    if yes_reply 'Do you want to install Yay Pacman Helper?' ; then
+    if yes_reply "Do you want to install Yay Pacman Helper?" ; then
         pacman -S --needed git base-devel
         git clone https://aur.archlinux.org/yay-bin.git
         cd yay-bin || exit
@@ -173,7 +173,7 @@ arch_install_yay(){ #Installing Yay
 }
 
 arch_install_flatpak(){ #Installing Flatpak
-    if yes_reply 'Do you want to install Flatpak?' ; then
+    if yes_reply "Do you want to install Flatpak?" ; then
         sudo yes | pacman -S flatpak && echo "Flatpak Installed"
     else
         echo "Moving On"
