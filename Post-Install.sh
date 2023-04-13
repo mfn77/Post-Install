@@ -124,7 +124,7 @@ install_extensions(){ #Installing Extensions
     if yes_reply "Do you want to install Gnome Extensions?" ; then
     echo "Installing Gnome Extensions"
         git clone https://github.com/bjarosze/gnome-bluetooth-quick-connect
-        cd gnome-bluetooth-quick-connect
+        cd gnome-bluetooth-quick-connect || exit
         echo "Bluetooth Qucik Connect downloaded"
         make install
         echo "Bluetooth Quick Connect has been installed"
@@ -228,7 +228,7 @@ arch_do_updates(){ #Updating
 
 arch_install_yay(){ #Installing Yay
     if yes_reply "Do you want to install Yay Pacman Helper?" ; then
-        sudo pacman -S --needed git base-devel --noconfirm
+        sudo pacman -S --needed git base-devel
         git clone https://aur.archlinux.org/yay.git
         cd yay || exit
         makepkg -si && echo "Installing Binaries"
@@ -346,7 +346,7 @@ arch_install_extensions(){ #Installing Extensions
     echo "Installing Gnome Extensions"
         sudo pacman -S wget --noconfirm
         git clone https://github.com/bjarosze/gnome-bluetooth-quick-connect
-        cd gnome-bluetooth-quick-connect
+        cd gnome-bluetooth-quick-connect || exit
         echo "Bluetooth Qucik Connect downloaded"
         make install
         echo "Bluetooth Quick Connect has been installed"
