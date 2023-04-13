@@ -220,11 +220,9 @@ apply_settings(){ #Applying Some Settings
     fi
 }
 
-
 arch_do_updates(){ #Updating
     printf '\e[1;31mUpdating System\e[m\n'
     sudo pacman -Syu --noconfirm && echo "System Updated"
-    
 }
 
 arch_install_yay(){ #Installing Yay
