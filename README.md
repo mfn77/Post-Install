@@ -122,10 +122,6 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
 
 ## ARCH SPECIAL CONTENTS
 
-
-### Flatpak
-
-
 ### Pacman Helper:                   
 
   - Yay
