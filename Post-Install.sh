@@ -215,13 +215,13 @@ apply_settings(){ #Applying Some Settings
 
 arch_do_updates(){ #Updating
     printf '\e[1;31mUpdating System\e[m\n'
-    sudo yes | pacman -Syu && echo "System Updated"
+    sudo pacman -Syu --noconfirm && echo "System Updated"
     
 }
 
 arch_install_yay(){ #Installing Yay
     if yes_reply "Do you want to install Yay Pacman Helper?" ; then
-        pacman -S --needed git base-devel
+        sudo pacman -S --needed git base-devel --noconfirm
         git clone https://aur.archlinux.org/yay-bin.git
         cd yay-bin || exit
         makepkg -si && echo "Installing Binaries"
@@ -236,7 +236,7 @@ arch_install_yay(){ #Installing Yay
 
 arch_install_flatpak(){ #Installing Flatpak
     if yes_reply "Do you want to install Flatpak?" ; then
-        sudo yes | pacman -S flatpak && echo "Flatpak Installed"
+        sudo pacman -S flatpak --noconfirm && echo "Flatpak Installed"
     else
         echo "Moving On"
     fi
@@ -248,8 +248,8 @@ arch_install_theming(){ #Installing Theming and Customizing Applications
         flatpak install com.github.GradienceTeam.Gradience -y && echo "Gradience Installed" || echo "Gradience Couldn't Installed"
         flatpak install org.gtk.Gtk3theme.adw-gtk3 -y && echo "Adwaita GTK 3 Theme for flatpaks Installed" || echo "Adwaita GTK 3 Theme for flatpaks Couldn't Installed"
         flatpak install org.gtk.Gtk3theme.adw-gtk3-dark -y && echo "Adwaita GTK 3 Dark Theme for flatpaks Installed" || echo "Adwaita GTK 3 Dark Theme for flatpaks Couldn't Installed"
-        sudo yes | pacman -S alacarte && echo "Alacarte Menu Editor Installed" || echo "Alacarte Menu Editor Couldn't Installed"
-        sudo yes | pacman -S dconf-editor && echo "Dconf Editor Installed" || echo "Dconf Editor Couldn't Installed"
+        sudo pacman -S alacarte --noconfirm && echo "Alacarte Menu Editor Installed" || echo "Alacarte Menu Editor Couldn't Installed"
+        sudo pacman -S dconf-editor --noconfirm && echo "Dconf Editor Installed" || echo "Dconf Editor Couldn't Installed"
         printf '\e[1;31mTheming And Customizing Applications Installed!\e[m\n'
     else
         echo "Moving on"
@@ -258,8 +258,8 @@ arch_install_theming(){ #Installing Theming and Customizing Applications
 
 arch_install_libre_office(){ #Installing LibreOffice
     if yes_reply "Do you want to install LibreOffice?" ; then 
-        sudo yes | pacman -S libreoffice-fresh && echo "Libreoffice Installed" || echo "Libreoffice Couldn't Installed"
-        sudo yes | pacman -S libreoffice-fresh-tr && echo "Libreoffice TR Language Pack Installed" || echo "Libreoffice TR Language Couldn't Installed"
+        sudo pacman -S libreoffice-fresh --noconfirm && echo "Libreoffice Installed" || echo "Libreoffice Couldn't Installed"
+        sudo pacman -S libreoffice-fresh-tr --noconfirm && echo "Libreoffice TR Language Pack Installed" || echo "Libreoffice TR Language Couldn't Installed"
         wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-libreoffice-theme/master/install-papirus-root.sh | sh && echo "Libreoffice Papirus Theme Installed" || echo "Libreoffice Papirus Theme Couldn't Installed"
         printf '\e[1;31mLibreOffice Installed\e[m\n'
     else
@@ -280,8 +280,8 @@ arch_install_gaming(){ #Installing Gaming Applications
 
 arch_install_photo_tools(){ #Installing Photo Editing and Drawing Applications
     if yes_reply "Do you want to install Photo Editing and Drawing Applications?" ; then
-        sudo yes | pacman -S gimp && echo "GIMP Installed" || echo "GIMP Couldn't Installed"
-        sudo yes | pacman -S inkscape && echo "Inkscape Installed" || echo "Inkscape Couldn't Installed"
+        sudo pacman -S gimp --noconfirm && echo "GIMP Installed" || echo "GIMP Couldn't Installed"
+        sudo pacman -S inkscape --noconfirm && echo "Inkscape Installed" || echo "Inkscape Couldn't Installed"
         yay -S blender --noconfirm && echo "Blender Installed" || echo "Blender Couldn't Installed"
         printf '\e[1;31mPhoto Editing and Drawing Applications Installed\e[m\n'
     else
@@ -291,7 +291,7 @@ arch_install_photo_tools(){ #Installing Photo Editing and Drawing Applications
 
 arch_install_virtualization(){ #Installing Virtualization Applications
     if yes_reply "Do you want to install Virtualization Applications?" ; then
-        sudo yes | pacman -S gnome-boxes && echo "Boxes Installed" || echo "Boxes Couldn't Installed"
+        sudo pacman -S gnome-boxes --noconfirm && echo "Boxes Installed" || echo "Boxes Couldn't Installed"
         yay -S virtualbox-bin --noconfirm && echo "VirtualBox Installed" || echo "VİrtualBox Couldn't Installed"
         yay -S virtualbox-bin-guest-iso --noconfirm && echo "VirtualBox Guest Additions Installed" || echo "VİrtualBox Guest AdditionsCouldn't Installed"
         yay -S waydroid --noconfirm && echo "Waydroid Installed" || echo "Waydroid Couldn't Installed"
@@ -308,7 +308,7 @@ arch_download_configs(){ #Downloading and Exctracting Configs
     echo "Configurations Syncing"
     cd ~/ || exit
     echo "Downloading Configuration Files"
-    sudo yes | pacman -S git
+    sudo pacman -S git --noconfirm
     git clone https://github.com/mfn77/Post-Install.git
     cd ~/Post-Install/icons || exit
     tar xvf Bibata-Modern-Ice.tar.xz
@@ -338,7 +338,7 @@ arch_cleanup_precopied_files(){ #Removing the already copied unnecessary files
 arch_install_extensions(){ #Installing Extensions
     if yes_reply "Do you want to install Gnome Extensions?" ; then
     echo "Installing Gnome Extensions"
-        sudo yes | pacman -S wget
+        sudo pacman -S wget --noconfirm
         git clone https://github.com/bjarosze/gnome-bluetooth-quick-connect
         cd gnome-bluetooth-quick-connect
         echo "Bluetooth Qucik Connect downloaded"
@@ -447,7 +447,7 @@ post_install_nobara(){
     apply_settings; bashbar 100
 }
 
-post_isntall_arch(){
+post_install_arch(){
     echo "You are using Arch Linux"
     arch_do_updates; bashbar 10
     arch_install_yay; bashbar 15
