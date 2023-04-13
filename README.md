@@ -7,7 +7,6 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
 
 ### Flatpak
 
-
 ### Theming Apps:  
 
   - Extension Manager(flatpak)
