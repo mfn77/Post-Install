@@ -25,8 +25,7 @@ update_system(){ #Updating - 1;31 means bold red as is & e[m will reset the styl
 
 install_flatpak(){ #Installing Flatpak
     if yes_reply "Do you want to install Flatpak?" ; then
-        sudo dnf install --assumeyes flatpak  > /dev/null 2>&1 & pid=$! && echo "Flatpak Installed"
-        wait $pid
+        sudo dnf install --assumeyes flatpak && echo "Flatpak Installed"
     else
         echo "Moving On"
     fi
@@ -121,6 +120,52 @@ cleanup_precopied_files(){ #Removing the already copied unnecessary files
     printf '\e[1;31mConfiguration Files Are Synced!\e[m\n'
 }
 
+install_extensions(){ #Installing Extensions
+    if yes_reply "Do you want to install Gnome Extensions?" ; then
+    echo "Installing Gnome Extensions"
+        git clone https://github.com/bjarosze/gnome-bluetooth-quick-connect
+        cd gnome-bluetooth-quick-connect
+        echo "Bluetooth Qucik Connect downloaded"
+        make install
+        echo "Bluetooth Quick Connect has been installed"
+        cd ~ || exit
+        sudo rm -r gnome-bluetooth-quick-connect
+        wget https://extensions.gnome.org/extension-data/io.github.mreditor.gnome-shell-extensions.scroll-panel.v10.shell-extension.zip
+        echo "Scroll Panel downloaded"
+        gnome-extensions install io.github.mreditor.gnome-shell-extensions.scroll-panel.v10.shell-extension.zip
+        echo "Scroll Panel has been installed"
+        sudo rm -r gnome-shell-extension-scroll-panel
+        wget https://extensions.gnome.org/extension-data/widgetsaylur.v24.shell-extension.zip
+        echo "Aylur's Widgets downloaded"
+        gnome-extensions install widgetsaylur.v24.shell-extension.zip
+        echo "Aylur's Widgets has been installed"
+        sudo rm widgetsaylur.v24.shell-extension.zip
+        wget https://extensions.gnome.org/extension-data/ddtermamezin.github.com.v43.shell-extension.zip
+        echo "ddterm downloaded"
+        gnome-extensions install ddtermamezin.github.com.v43.shell-extension.zip
+        echo "ddterm has been installed"
+        sudo rm ddtermamezin.github.com.v43.shell-extension.zip
+        wget https://extensions.gnome.org/extension-data/gnome-ui-tuneitstime.tech.v17.shell-extension.zip
+        echo "Gnome 4x UI Improvements downloaded"
+        gnome-extensions install gnome-ui-tuneitstime.tech.v17.shell-extension.zip
+        echo "Gnome 4x UI Improvements has been installed"
+        sudo rm gnome-ui-tuneitstime.tech.v17.shell-extension.zip
+        wget https://extensions.gnome.org/extension-data/blur-my-shellaunetx.v45.shell-extension.zip
+        echo "Blur My Shell downloaded"
+        gnome-extensions install blur-my-shellaunetx.v45.shell-extension.zip
+        echo "Blur My Shell has been installed"
+        sudo rm blur-my-shellaunetx.v45.shell-extension.zip
+        wget https://extensions.gnome.org/extension-data/MaximizeToEmptyWorkspace-extensionkaisersite.de.v13.shell-extension.zip
+        echo "Maximize To Empty Workspace downloaded"
+        gnome-extensions install MaximizeToEmptyWorkspace-extensionkaisersite.de.v13.shell-extension.zip
+        echo "Maximize To Empty Workspace has been installed"
+        sudo rm MaximizeToEmptyWorkspace-extensionkaisersite.de.v13.shell-extension.zip
+        printf '\e[1;31mExtensions Installed!\e[m\n'
+    else
+        echo "Moving On"
+    fi
+}
+
 install_wallpaper(){ #Installing Wallpapers
     if yes_reply "Do you want to install Wallpapers?" ; then
     echo "Installing Wallpapers"
@@ -137,6 +182,23 @@ install_wallpaper(){ #Installing Wallpapers
     else
         echo "Moving On"
     fi
+}
+
+enable_extensions(){ #Enabling Installed Extensions
+    echo "Applying Some Settings"
+    gnome-extensions enable user-theme@gnome-shell-extensions.gcampax.github.com
+    gnome-extensions enable widgets@aylur
+    gnome-extensions enable io.github.mreditor.gnome-shell-extensions.scroll-panel
+    gnome-extensions enable ddterm@amezin.github.com
+    gnome-extensions enable blur-my-shell@aunetx
+    gnome-extensions enable bluetooth-quick-connect@bjarosze.gmail.com
+    gnome-extensions enable MaximizeToEmptyWorkspace-extension@kaisersite.de
+    gnome-extensions enable gnome-ui-tune@itstime.tech
+    gnome-extensions enable appindicatorsupport@rgcjonas.gmail.com
+    gnome-extenisons enable gamemode@christian.kellner.me
+    gnome-extensions enable just-perfection-desktop@just-perfection
+    gnome-extenisons enable wireless-hid@chlumskyvaclav.gmail.com
+    printf '\e[1;31mExtensions Enabled!\e[m\n'
 }
 
 apply_settings(){ #Applying Some Settings
@@ -183,16 +245,18 @@ arch_install_flatpak(){ #Installing Flatpak
 post_install_nobara(){
     echo "You are using Nobara"
     update_system; bashbar 10
-    install_flatpak; bashbar 20
-    install_theming; bashbar 30
-    install_libre_office; bashbar 40
-    install_gaming; bashbar 50
-    install_photo_tools; bashbar 60
-    install_virtualization; bashbar 70
-    download_configs; bashbar 80
-    copy_configs; bashbar 85
-    cleanup_precopied_files; bashbar 90
-    install_wallpaper; bashbar 95
+    install_flatpak; bashbar 15
+    install_theming; bashbar 20
+    install_libre_office; bashbar 30
+    install_gaming; bashbar 40
+    install_photo_tools; bashbar 50
+    install_virtualization; bashbar 60
+    download_configs; bashbar 65
+    copy_configs; bashbar 70
+    cleanup_precopied_files; bashbar 75
+    install_extensions; bashbar 85
+    install_wallpaper; bashbar 90
+    enable_extensions; bashbar 95
     apply_settings; bashbar 100
 }
 
@@ -200,7 +264,7 @@ post_isntall_arch(){
     echo "You are using Arch Linux"
     arch_do_updates; bashbar 30
     arch_install_yay; bashbar 60
-    arch_install_flatpack; bashbar 100
+    arch_install_flatpak; bashbar 100
 }
 
 main(){
