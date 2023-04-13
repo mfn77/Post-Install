@@ -377,6 +377,26 @@ arch_install_extensions(){ #Installing Extensions
         echo "Maximize To Empty Workspace has been installed"
         sudo rm MaximizeToEmptyWorkspace-extensionkaisersite.de.v13.shell-extension.zip
         printf '\e[1;31mExtensions Installed!\e[m\n'
+        wget https://extensions.gnome.org/extension-data/user-themegnome-shell-extensions.gcampax.github.com.v50.shell-extension.zip
+        echo "User Themes downloaded"
+        gnome-extensions install user-themegnome-shell-extensions.gcampax.github.com.v50.shell-extension.zip
+        echo "User Themes has been installed"
+        sudo rm user-themegnome-shell-extensions.gcampax.github.com.v50.shell-extension.zip
+        wget https://extensions.gnome.org/extension-data/appindicatorsupportrgcjonas.gmail.com.v53.shell-extension.zip
+        echo "AppIndicator Support downloaded"
+        gnome-extensions install appindicatorsupportrgcjonas.gmail.com.v53.shell-extension.zip
+        echo "AppIndicator Support has been installed"
+        sudo rm appindicatorsupportrgcjonas.gmail.com.v53.shell-extension.zip
+        wget https://extensions.gnome.org/extension-data/just-perfection-desktopjust-perfection.v24.shell-extension.zip
+        echo "Just Perfection downloaded"
+        gnome-extensions install just-perfection-desktopjust-perfection.v24.shell-extension.zip
+        echo "Just Perfection has been installed"
+        sudo rm just-perfection-desktopjust-perfection.v24.shell-extension.zip
+        wget https://extensions.gnome.org/extension-data/wireless-hidchlumskyvaclav.gmail.com.v11.shell-extension.zip
+        echo "Wirelles HID downloaded"
+        gnome-extensions install wireless-hidchlumskyvaclav.gmail.com.v11.shell-extension.zip
+        echo "Wirelles HID has been installed"
+        sudo rm wireless-hidchlumskyvaclav.gmail.com.v11.shell-extension.zip
     else
         echo "Moving On"
     fi
