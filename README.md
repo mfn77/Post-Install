@@ -5,8 +5,6 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
 
 # CONTENTS
 
-## NOBARA
-
 ### Flatpak
 
 
@@ -84,6 +82,27 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
   
   - Linux Dynamic Wallpapers
   
+### Extensions:
+
+  - Bluetooth Quick Connect
+
+  - User Themes
+  
+  - Aylur's Widgets
+  
+  - AppIndicator
+  
+  - Blur My Shell
+  
+  - Gnome 4x UI Improvements
+  
+  - ddterm
+  
+  - Maximize To Empty Workspace
+  
+  - Scroll Panel
+  
+  - Just Perfection
 
 ### Settings:                        
   
@@ -102,7 +121,7 @@ Post Install Script That Installs Some Applications And Copies And Applies Some 
   - Material Mountains Wallpaper applying
   
 
-## ARCH (Lots of things will be added)
+## ARCH SPECIAL CONTENTS
 
 
 ### Flatpak
