@@ -496,12 +496,12 @@ main(){
         echo "You are not using Nobara checking others"
     fi
 
-    #Checking to see if the system is a Arch Linux
-    if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Arch"* ]]; then
+    #Checking to see if the system is a Arch Linux or derivatives
+    if [[ $(grep PRETTY /etc/os-release | cut -c 13-) = *"Arch"* || $(grep PRETTY /etc/os-release | cut -c 13-) = *"Endeavour"* || $(grep PRETTY /etc/os-release | cut -c 13-) = *"Garuda"* ]]; then
         post_install_arch
     else 
-        echo "You are not using Arch Linux"
+        echo "You are not using Arch Linux or derivatives"
     fi
-    
+  
     printf '\e[1;31mFINISHED!\e[m\n'
 }; main "$@"
