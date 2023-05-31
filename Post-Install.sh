@@ -38,7 +38,7 @@ install_theming(){ #Installing Theming and Customizing Applications
         flatpak install org.gtk.Gtk3theme.adw-gtk3 -y && echo "Adwaita GTK 3 Theme for flatpaks Installed" || echo "Adwaita GTK 3 Theme for flatpaks Couldn't Installed"
         flatpak install org.gtk.Gtk3theme.adw-gtk3-dark -y && echo "Adwaita GTK 3 Dark Theme for flatpaks Installed" || echo "Adwaita GTK 3 Dark Theme for flatpaks Couldn't Installed"
         sudo dnf install --assumeyes alacarte && echo "Alacarte Menu Editor Installed" || echo "Alacarte Menu Editor Couldn't Installed"
-        sudo dnf install --assumeyes dconf-editor && echo "Dconf Editor Installed" || echo "Dconf Editor Couldn't Installed"
+        flatpak install ca.desrt.dconf-editor -y && echo "Dconf Editor Installed" || echo "Dconf Editor Couldn't Installed"
         printf '\e[1;31mTheming And Customizing Applications Installed!\e[m\n'
     else
         echo "Moving on"
@@ -47,7 +47,7 @@ install_theming(){ #Installing Theming and Customizing Applications
 
 install_libre_office(){ #Installing LibreOffice
     if yes_reply "Do you want to install LibreOffice?" ; then 
-        sudo dnf install --assumeyes libreoffice && echo "Libreoffice Installed" || echo "Libreoffice Couldn't Installed"
+        flatpak install org.libreoffice.LibreOffice -y && echo "Libreoffice Installed" || echo "Libreoffice Couldn't Installed"
         sudo dnf install --assumeyes libreoffice-langpack-tr && echo "Libreoffice TR Language Pack Installed" || echo "Libreoffice TR Language Couldn't Installed"
         wget -qO- https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-libreoffice-theme/master/install-papirus-root.sh | sh && echo "Libreoffice Papirus Theme Installed" || echo "Libreoffice Papirus Theme Couldn't Installed"
         printf '\e[1;31mLibreOffice Installed\e[m\n'
@@ -68,8 +68,9 @@ install_gaming(){ #Installing Gaming Applications
 
 install_photo_tools(){ #Installing Photo Editing and Drawing Applications
     if yes_reply "Do you want to install Photo Editing and Drawing Applications?" ; then
-        sudo dnf install --assumeyes gimp && echo "GIMP Installed" || echo "GIMP Couldn't Installed"
-        sudo dnf install --assumeyes inkscape && echo "Inkscape Installed" || echo "Inkscape Couldn't Installed"
+        flatpak install org.gimp.GIMP -y && echo "GIMP Installed" || echo "GIMP Couldn't Installed"
+        flatpak install org.inkscape.Inkscape -y && echo "Inkscape Installed" || echo "Inkscape Couldn't Installed"
+        flatpak install org.kde.krita -y && echo "Krita Installed" || echo "Krita Couldn't Installed"
         sudo dnf install --assumeyes blender && echo "Blender Installed" || echo "Blender Couldn't Installed"
         printf '\e[1;31mPhoto Editing and Drawing Applications Installed\e[m\n'
     else
@@ -79,7 +80,8 @@ install_photo_tools(){ #Installing Photo Editing and Drawing Applications
 
 install_virtualization(){ #Installing Virtualization Applications
     if yes_reply "Do you want to install Virtualization Applications?" ; then
-        sudo dnf install --assumeyes gnome-boxes && echo "Boxes Installed" || echo "Boxes Couldn't Installed"
+        flatpak install org.gnome.Boxes -y && echo "Boxes Installed" || echo "Boxes Couldn't Installed"
+        flatpak install org.gnome.Boxes.Extension.OsinfoDb -y && echo "Boxes Extension Installed" || echo "Boxes Extension Couldn't Installed"
         sudo dnf install --assumeyes VirtualBox && echo "VirtualBox Installed" || echo "VİrtualBox Couldn't Installed"
         sudo dnf install --assumeyes kmod-VirtualBox && echo "VirtualBox Kernel Mods Installed" || echo "VİrtualBox Kernel ModsCouldn't Installed"
         sudo dnf install --assumeyes virtualbox-guest-additions && echo "VirtualBox Guest Additions Installed" || echo "VİrtualBox Guest AdditionsCouldn't Installed"
@@ -160,6 +162,11 @@ install_extensions(){ #Installing Extensions
         gnome-extensions install MaximizeToEmptyWorkspace-extensionkaisersite.de.v13.shell-extension.zip
         echo "Maximize To Empty Workspace has been installed"
         sudo rm MaximizeToEmptyWorkspace-extensionkaisersite.de.v13.shell-extension.zip
+        wget https://extensions.gnome.org/extension-data/nightthemeswitcherromainvigier.fr.v74.shell-extension.zip
+        echo "Night Theme Switcher has been downloaded"
+        gnome-extensions install nightthemeswitcherromainvigier.fr.v74.shell-extension.zip
+        echo "Night Theme Switcher has been installed"
+        sudo rm nightthemeswitcherromainvigier.fr.v74.shell-extension.zip
         printf '\e[1;31mExtensions Installed!\e[m\n'
     else
         echo "Moving On"
@@ -199,6 +206,7 @@ enable_extensions(){ #Enabling Installed Extensions
         gnome-extenisons enable gamemode@christian.kellner.me
         gnome-extensions enable just-perfection-desktop@just-perfection
         gnome-extenisons enable wireless-hid@chlumskyvaclav.gmail.com
+        gnome-extenisons enable nightthemeswitcher@romainvigier.fr
         printf '\e[1;31mExtensions Enabled!\e[m\n'
     else
         echo "Moving On"
